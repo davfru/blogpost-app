@@ -65,3 +65,15 @@ describe('When logged in', async() => {
         });
     });
 });
+
+describe('User is not logged in', async () => {
+    test('User cannot create blog posts', async () => {
+        const result = await page.post('/api/blogs', { title: 'My Title', content: 'My Content'}); 
+        expect(result).toEqual({ error: 'You must log in!' });
+    });
+
+    test('User cannot retrieve posts', async () => {
+        const result = await page.get('/api/blogs');
+        expect(result).toEqual({ error: 'You must log in!' });
+    });
+});
